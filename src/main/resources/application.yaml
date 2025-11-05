@@ -1,30 +1,35 @@
 server:
-  port: 5005
+  port: ${SERVER_PORT:5005}
   servlet:
-    context-path: /file
+    context-path: ${CONTEXT_PATH:/file}
 
 spring:
   application:
-    name: file-service
+    name: ${APP_NAME:file-service}
   data:
     mongodb:
-      uri: mongodb://localhost:30000/clone-fb-file-service
+      uri: ${MONGODB_URI:mongodb://localhost:30000/clone-fb-file-service}
   servlet:
     multipart:
-      max-file-size: 25MB
-      max-request-size: 25MB
+      max-file-size: ${MAX_FILE_SIZE:25MB}
+      max-request-size: ${MAX_REQUEST_SIZE:25MB}
 
 app:
   file:
-    storage-dir: D:/Project_canhan/clone-facebook/be/file-service/upload
-    download-prefix: http://localhost:5000/api/v1/file/media/download/
+    storage-dir: ${FILE_STORAGE_DIR:/tmp/upload}
+    download-prefix: ${FILE_DOWNLOAD_PREFIX:https://gateway-6r77.onrender.com/api/v1/file/media/download/}
 
 cloud:
   aws:
     s3:
-      bucket: clone-fb-bucket
+      bucket: ${AWS_S3_BUCKET:clone-fb-bucket}
     region:
-      static: ap-southeast-1
+      static: ${AWS_REGION:ap-southeast-1}
     credentials:
-      access-key: AKIAVRUVQYOXIZREVNNG
-      secret-key: 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
+      access-key: ${AWS_ACCESS_KEY:}
+      secret-key: ${AWS_SECRET_KEY:}
+
+logging:
+  level:
+    root: ${LOGGING_LEVEL:INFO}
+    "[com.tam.file]": ${LOGGING_LEVEL:INFO}
