@@ -1,0 +1,30 @@
+server:
+  port: 5005
+  servlet:
+    context-path: /file
+
+spring:
+  application:
+    name: file-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:30000/clone-fb-file-service
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+
+app:
+  file:
+    storage-dir: D:/Project_canhan/clone-facebook/be/file-service/upload
+    download-prefix: http://localhost:5000/api/v1/file/media/download/
+
+cloud:
+  aws:
+    s3:
+      bucket: clone-fb-bucket
+    region:
+      static: ap-southeast-1
+    credentials:
+      access-key: AKIAVRUVQYOXIZREVNNG
+      secret-key: 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
