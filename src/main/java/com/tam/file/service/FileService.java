@@ -2,6 +2,7 @@ package com.tam.file.service;
 
 import com.tam.file.dto.request.UploadFileRequest;
 import com.tam.file.dto.response.FileData;
+import com.tam.file.dto.response.FileMnmtResponse;
 import com.tam.file.dto.response.FileResponse;
 import com.tam.file.entity.FileMnmt;
 import com.tam.file.exception.AppException;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Optional;
 
 @Service
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
@@ -334,5 +336,47 @@ public class FileService {
 
     public FileData download(String filename) throws IOException {
         throw new UnsupportedOperationException("Download method needs to be refactored");
+    }
+
+    // get file
+    // Lấy tất cả file của user
+    public Optional<FileMnmt> getAllFileByOwnerId(String ownerId) {
+        return fileMgmtRepository.findByOwnerId(ownerId);
+    }
+
+    // Lấy file theo type (avatar, wallpaper, post, story, message)
+    public FileMnmt getAllFilesByOwnerIdAndType(String ownerId, String type) {
+        Optional<FileMnmt> fileMnmt = fileMgmtRepository.findByOwnerId(ownerId);
+
+        if (fileMnmt.isEmpty()) {
+            return null;
+        }
+
+        FileMnmt result = fileMnmt.get();
+        FileMnmt filtered = new FileMnmt();
+        filtered.setId(result.getId());
+        filtered.setOwnerId(result.getOwnerId());
+
+        switch (type.toLowerCase()) {
+            case "avatar":
+                filtered.setAvatar(result.getAvatar());
+                break;
+            case "wallpaper":
+                filtered.setWallpaper(result.getWallpaper());
+                break;
+            case "post":
+                filtered.setPost(result.getPost());
+                break;
+            case "story":
+                filtered.setStory(result.getStory());
+                break;
+            case "message":
+                filtered.setMessage(result.getMessage());
+                break;
+            default:
+                return null;
+        }
+
+        return filtered;
     }
 }

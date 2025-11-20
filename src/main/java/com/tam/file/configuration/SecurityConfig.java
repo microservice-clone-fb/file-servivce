@@ -29,7 +29,7 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain internalFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .securityMatcher("/internal/**")
+                .securityMatcher("/internal/**, /file/internal/**")
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .csrf(AbstractHttpConfigurer::disable);
 

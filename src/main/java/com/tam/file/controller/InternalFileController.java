@@ -40,7 +40,6 @@ public class InternalFileController {
                 .header(HttpHeaders.CONTENT_TYPE, fileData.contentType())
                 .body(fileData.resource());
     }
-
 //    @DeleteMapping("/internal/media/{fileName}")
 //    public ApiResponse<Void> deleteMedia(@PathVariable String fileName) throws IOException {
 //        fileService.delete(fileName);
